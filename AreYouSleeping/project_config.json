@@ -1,0 +1,23 @@
+{
+  "sourceFiles": [
+    "AreYouSleepingApp.swift",
+    "Store.swift",
+    "Models/SleepRecord.swift",
+    "Utils/TimeUtil.swift",
+    "Services/ApiClient.swift",
+    "Services/BedtimeReminder.swift",
+    "Views/AgreementView.swift",
+    "Views/ContentView.swift",
+    "Views/DashboardView.swift",
+    "Views/StatsView.swift",
+    "Views/SettingsView.swift",
+    "Views/StyleSettingsView.swift",
+    "Views/FriendControlView.swift"
+  ],
+  "info": {
+    "deploymentTarget": "iOS 16.0",
+    "bundleIdentifier": "com.ausleep.ios",
+    "displayName": "睡了吗",
+    "team": ""
+  }
+}

@@ -1,0 +1,218 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		111111111111111111 /* AreYouSleepingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222222; };
+		111111111111111112 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222223; };
+		111111111111111113 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222224; };
+		111111111111111114 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222225; };
+		111111111111111115 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222226; };
+		111111111111111116 /* BedtimeReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222227; };
+		111111111111111117 /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222228; };
+		111111111111111118 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222229; };
+		111111111111111119 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222230; };
+		111111111111111120 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222231; };
+		111111111111111121 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222232; };
+		111111111111111122 /* StyleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222233; };
+		111111111111111123 /* FriendControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222234; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		333333333333333301 /* AreYouSleeping.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AreYouSleeping.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		222222222222222222 /* AreYouSleepingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreYouSleepingApp.swift; sourceTree = "<group>"; };
+		222222222222222223 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		222222222222222224 /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
+		222222222222222225 /* TimeUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
+		222222222222222226 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		222222222222222227 /* BedtimeReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BedtimeReminder.swift; sourceTree = "<group>"; };
+		222222222222222228 /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
+		222222222222222229 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		222222222222222230 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		222222222222222231 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		222222222222222232 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		222222222222222233 /* StyleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleSettingsView.swift; sourceTree = "<group>"; };
+		222222222222222234 /* FriendControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendControlView.swift; sourceTree = "<group>"; };
+		222222222222222235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		444444444444444401 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		555555555555555501 = {
+			isa = PBXGroup; children = (
+				555555555555555502 /* AreYouSleeping */,
+				555555555555555503 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		555555555555555502 /* AreYouSleeping */ = {
+			isa = PBXGroup; children = (
+				222222222222222222 /* AreYouSleepingApp.swift */,
+				222222222222222223 /* Store.swift */,
+				222222222222222235 /* Info.plist */,
+				555555555555555504 /* Models */,
+				555555555555555505 /* Utils */,
+				555555555555555506 /* Services */,
+				555555555555555507 /* Views */,
+			);
+			path = AreYouSleeping;
+			sourceTree = "<group>";
+		};
+		555555555555555503 /* Products */ = {
+			isa = PBXGroup; children = (333333333333333301 /* AreYouSleeping.app */);
+			name = Products; sourceTree = "<group>";
+		};
+		555555555555555504 /* Models */ = {
+			isa = PBXGroup; children = (222222222222222224 /* SleepRecord.swift */);
+			path = Models; sourceTree = "<group>";
+		};
+		555555555555555505 /* Utils */ = {
+			isa = PBXGroup; children = (222222222222222225 /* TimeUtil.swift */);
+			path = Utils; sourceTree = "<group>";
+		};
+		555555555555555506 /* Services */ = {
+			isa = PBXGroup; children = (
+				222222222222222226 /* ApiClient.swift */,
+				222222222222222227 /* BedtimeReminder.swift */,
+			);
+			path = Services; sourceTree = "<group>";
+		};
+		555555555555555507 /* Views */ = {
+			isa = PBXGroup; children = (
+				222222222222222228 /* AgreementView.swift */,
+				222222222222222229 /* ContentView.swift */,
+				222222222222222230 /* DashboardView.swift */,
+				222222222222222231 /* StatsView.swift */,
+				222222222222222232 /* SettingsView.swift */,
+				222222222222222233 /* StyleSettingsView.swift */,
+				222222222222222234 /* FriendControlView.swift */,
+			);
+			path = Views; sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		666666666666666601 /* AreYouSleeping */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777777777777777701;
+			buildPhases = (
+				888888888888888801 /* Sources */,
+				444444444444444401 /* Frameworks */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = AreYouSleeping;
+			productName = AreYouSleeping;
+			productReference = 333333333333333301;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		999999999999999901 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 777777777777777702;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = ("zh-Hans", en, Base);
+			mainGroup = 555555555555555501;
+			productRefGroup = 555555555555555503;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (666666666666666601);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		888888888888888801 /* Sources */ = {
+			isa = PBXSourcesBuildPhase; buildActionMask = 2147483647;
+			files = (
+				111111111111111111 /* AreYouSleepingApp.swift */,
+				111111111111111112 /* Store.swift */,
+				111111111111111113 /* SleepRecord.swift */,
+				111111111111111114 /* TimeUtil.swift */,
+				111111111111111115 /* ApiClient.swift */,
+				111111111111111116 /* BedtimeReminder.swift */,
+				111111111111111117 /* AgreementView.swift */,
+				111111111111111118 /* ContentView.swift */,
+				111111111111111119 /* DashboardView.swift */,
+				111111111111111120 /* StatsView.swift */,
+				111111111111111121 /* SettingsView.swift */,
+				111111111111111122 /* StyleSettingsView.swift */,
+				111111111111111123 /* FriendControlView.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7A7A7A7A7A7A7A7A01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = AreYouSleeping/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ausleep.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7A7A7A7A7A7A7A7A02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = AreYouSleeping/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ausleep.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		777777777777777701 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (7A7A7A7A7A7A7A7A01, 7A7A7A7A7A7A7A7A02);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777777777777777702 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (7A7A7A7A7A7A7A7A01, 7A7A7A7A7A7A7A7A02);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 999999999999999901;
+}

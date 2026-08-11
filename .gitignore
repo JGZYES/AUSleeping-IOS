@@ -1,0 +1,24 @@
+# Xcode
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
+DerivedData/
+build/
+*.xcuserdata
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Swift Package Manager
+.build/
+*.xcodeproj/xcuserdata/
+
+# Simulator
+*.simulator
+
+# macOS
+.DS_Store
+Thumbs.db
