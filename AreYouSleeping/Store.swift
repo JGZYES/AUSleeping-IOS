@@ -123,7 +123,7 @@ final class Store: ObservableObject {
         let offset = bedMin < waketimeMinutes ? -1 : 0
         let night = TimeUtil.dateStr(Date(timeIntervalSince1970: sleepStartMillis / 1000), offsetDays: offset)
         let rec = SleepRecord(nightDate: night, bedMinutes: bedMin, wakeMinutes: wakeMin, sleepHours: hours)
-        recordLines.removeAll { $0.hasPrefix(night + "|") }
+        recordLines = recordLines.filter { !$0.hasPrefix(night + "|") }
         recordLines.insert(rec.serialize())
         isSleeping = false
         sleepStartMillis = 0
