@@ -4,6 +4,9 @@ struct SettingsView: View {
     @EnvironmentObject var store: Store
     @State private var showAgreement = false
     @State private var showStyleSettings = false
+    @State private var showTimePicker = false
+    @State private var isBedPicker = false
+    @State private var pickerDate = Date()
 
     var body: some View {
         NavigationStack {
@@ -35,7 +38,7 @@ struct SettingsView: View {
                         Text(TimeUtil.fmt(store.bedtimeMinutes)).foregroundColor(.blue)
                     }
                     .contentShape(Rectangle())
-                    .onTapGesture { pickTime(isBed: true) }
+                    .onTapGesture { showTimePickerSheet(isBed: true) }
 
                     HStack {
                         Text("目标起床时间")
@@ -43,7 +46,7 @@ struct SettingsView: View {
                         Text(TimeUtil.fmt(store.waketimeMinutes)).foregroundColor(.blue)
                     }
                     .contentShape(Rectangle())
-                    .onTapGesture { pickTime(isBed: false) }
+                    .onTapGesture { showTimePickerSheet(isBed: false) }
                 } header: { Text("作息") }
 
                 // MARK: - 提醒
@@ -98,7 +101,55 @@ struct SettingsView: View {
             .sheet(isPresented: $showAgreement) {
                 AgreementView()
             }
+            .sheet(isPresented: $showTimePicker) {
+                timePickerSheet
+                    .presentationDetents([.height(300)])
+            }
         }
+    }
+
+    // MARK: - 时间选择器（纯 SwiftUI）
+    private var timePickerSheet: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Button("取消") { showTimePicker = false }
+                Spacer()
+                Text(isBedPicker ? "就寝时间" : "起床时间").font(.headline)
+                Spacer()
+                Button("确定") {
+                    let cal = Calendar.current
+                    let h = cal.component(.hour, from: pickerDate)
+                    let m = cal.component(.minute, from: pickerDate)
+                    let v = h * 60 + m
+                    if isBedPicker {
+                        store.bedtimeMinutes = v
+                        BedtimeReminder.schedule(store: store)
+                    } else {
+                        store.waketimeMinutes = v
+                    }
+                    store.save()
+                    showTimePicker = false
+                }
+                .bold()
+            }
+            .padding(.horizontal)
+
+            DatePicker("", selection: $pickerDate, displayedComponents: .hourAndMinute)
+                .datePickerStyle(.wheel)
+                .labelsHidden()
+        }
+        .padding(.top, 12)
+    }
+
+    private func showTimePickerSheet(isBed: Bool) {
+        isBedPicker = isBed
+        let curMin = isBed ? store.bedtimeMinutes : store.waketimeMinutes
+        let cal = Calendar.current
+        var comps = cal.dateComponents([.year, .month, .day], from: Date())
+        comps.hour = curMin / 60
+        comps.minute = curMin % 60
+        pickerDate = cal.date(from: comps) ?? Date()
+        showTimePicker = true
     }
 
     private var shareText: String {
@@ -109,37 +160,5 @@ struct SettingsView: View {
               点击链接直接连接（需安装「睡了吗」）：
               \(webLink)
               """
-    }
-
-    private func pickTime(isBed: Bool) {
-        let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        guard let root = scene?.windows.first?.rootViewController else { return }
-
-        let vc = UIViewController()
-        let picker = UIDatePicker()
-        picker.datePickerMode = .time
-        picker.preferredDatePickerStyle = .wheels
-        picker.frame = CGRect(x: 0, y: 50, width: 320, height: 216)
-
-        let alert = UIAlertController(title: isBed ? "就寝时间" : "起床时间", message: nil, preferredStyle: .alert)
-        alert.view.addSubview(picker)
-
-        alert.addAction(UIAlertAction(title: "确定", style: .default) { _ in
-            let cal = Calendar.current
-            let h = cal.component(.hour, from: picker.date)
-            let m = cal.component(.minute, from: picker.date)
-            let v = h * 60 + m
-            if isBed {
-                store.bedtimeMinutes = v
-                BedtimeReminder.schedule(store: store)
-            } else {
-                store.waketimeMinutes = v
-            }
-            store.save()
-        })
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel))
-
-        alert.view.frame = CGRect(x: 0, y: 0, width: 320, height: 350)
-        root.present(alert, animated: true)
     }
 }
