@@ -78,23 +78,26 @@ struct FriendControlView: View {
         errorMsg = nil
         friendInfo = nil
         Task {
-            let result = await ApiClient.query(code: friendCode)
-            isLoading = false
-            switch result {
-            case .success(let info):
-                friendInfo = info
-            case .failure(let e):
-                errorMsg = "查询失败：\(e.localizedDescription)"
+            let info = await ApiClient.friendInfo(code: friendCode)
+            await MainActor.run {
+                isLoading = false
+                if let nick = info?["nickname"] as? String {
+                    friendInfo = "昵称：\(nick)"
+                } else if let ok = info?["ok"] as? Bool, !ok {
+                    errorMsg = (info?["error"] as? String) ?? "找不到该控制码"
+                } else {
+                    friendInfo = "已连接（昵称未知）"
+                }
             }
         }
     }
 
     private func sendCommand(_ cmd: String) {
         Task {
-            let result = await ApiClient.command(code: friendCode, cmd: cmd)
+            let result = await ApiClient.friendTrigger(friendCode: friendCode, action: cmd)
             await MainActor.run {
-                if case .failure(let e) = result {
-                    errorMsg = "指令失败：\(e.localizedDescription)"
+                if !result.ok {
+                    errorMsg = "指令失败：\(result.error ?? "未知错误")"
                 }
             }
         }
