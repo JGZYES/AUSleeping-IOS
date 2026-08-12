@@ -1,11 +1,14 @@
 import SwiftUI
+import FamilyControls
 
 struct SettingsView: View {
     @EnvironmentObject var store: Store
+    @StateObject private var stm = ScreenTimeManager.shared
     @State private var showAgreement = false
     @State private var showTimePicker = false
     @State private var isBedPicker = false
     @State private var pickerDate = Date()
+    @State private var showFamilyPicker = false
 
     var body: some View {
         NavigationStack {
@@ -62,6 +65,35 @@ struct SettingsView: View {
                             .onChange(of: store.supervisionEnabled) { _ in store.save() }
                     }
 
+                    // 应用屏蔽卡片
+                    cardSection(header: "应用屏蔽", footer: "就寝时段通过系统屏幕时间屏蔽所选应用") {
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text(stm.blockedAppCount > 0
+                                    ? "已选择 \(stm.blockedAppCount) 个应用"
+                                    : "未选择任何应用")
+                                    .font(.system(size: 14))
+                                Spacer()
+                                Button("选择应用") {
+                                    showFamilyPicker = true
+                                }
+                                .buttonStyle(.bordered)
+                                .tint(.blue)
+                                .disabled(!stm.isAuthorized)
+                            }
+                            if !stm.isAuthorized {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .font(.caption)
+                                        .foregroundColor(.orange)
+                                    Text("需先授予屏幕时间权限")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
+
                     // 后台运行卡片
                     cardSection(header: "后台运行", footer: "关闭后应用切到后台将停止服务") {
                         Toggle("允许后台运行", isOn: $store.backgroundRunning)
@@ -111,6 +143,17 @@ struct SettingsView: View {
             .sheet(isPresented: $showTimePicker) {
                 timePickerSheet
                     .presentationDetents([.height(300)])
+            }
+            .familyActivityPicker(
+                isPresented: $showFamilyPicker,
+                selection: $stm.selection
+            )
+            .onChange(of: stm.selection) { newValue in
+                stm.saveSelection(newValue)
+                store.blockedAppCount = stm.blockedAppCount
+                store.save()
+                // 根据当前作息重新调度
+                stm.scheduleMonitoring(bedMin: store.bedtimeMinutes, wakeMin: store.waketimeMinutes)
             }
         }
     }

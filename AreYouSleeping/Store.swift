@@ -31,8 +31,9 @@ final class Store: ObservableObject {
     @Published var sleepStartMillis: Double = 0
     @Published var lastNagMillis: Double = 0
 
-    // MARK: - 屏蔽应用包名（iOS 不支持实际屏蔽，仅记录）
-    @Published var blockedPackages: Set<String> = []
+    // MARK: - 屏蔽应用（Screen Time API）
+    @Published var blockedAppCount: Int = 0          // 已选中的应用数
+    @Published var familyControlsAuthorized: Bool = false
 
     // MARK: - 睡眠记录
     @Published var recordLines: Set<String> = []
@@ -65,7 +66,7 @@ final class Store: ObservableObject {
         isSleeping = d.bool(forKey: "sleeping")
         sleepStartMillis = d.double(forKey: "start")
         lastNagMillis = d.double(forKey: "lastNag")
-        blockedPackages = Set(d.stringArray(forKey: "blocked") ?? [])
+        blockedAppCount = d.integer(forKey: "blocked_count")
         recordLines = Set(d.stringArray(forKey: "records") ?? [])
     }
 
@@ -91,7 +92,7 @@ final class Store: ObservableObject {
         d.set(isSleeping, forKey: "sleeping")
         d.set(sleepStartMillis, forKey: "start")
         d.set(lastNagMillis, forKey: "lastNag")
-        d.set(Array(blockedPackages), forKey: "blocked")
+        d.set(blockedAppCount, forKey: "blocked_count")
         d.set(Array(recordLines), forKey: "records")
     }
 
