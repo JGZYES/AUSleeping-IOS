@@ -12,7 +12,7 @@ struct FriendControlView: View {
             Section {
                 HStack {
                     TextField("输入朋友的控制码", text: $friendCode)
-                        .textInputAutocapitalization(.allCharacters)
+                        .autocapitalization(.allCharacters)
                         .disableAutocorrection(true)
                     Button("查询") { lookupFriend() }
                         .buttonStyle(.borderedProminent)
