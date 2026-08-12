@@ -37,7 +37,6 @@ struct ContentView: View {
                     .tag(2)
             }
             .tint(.blue)
-            .toolbarBackground(.ultraThinMaterial, for: .tabBar)
         }
     }
 }
