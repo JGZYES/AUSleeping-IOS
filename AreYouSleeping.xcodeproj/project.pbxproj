@@ -19,6 +19,7 @@
 		111111111111111121 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222232; };
 		111111111111111122 /* StyleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222233; };
 		111111111111111123 /* FriendControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222234; };
+		111111111111111124 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222222222222222236; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		222222222222222233 /* StyleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleSettingsView.swift; sourceTree = "<group>"; };
 		222222222222222234 /* FriendControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendControlView.swift; sourceTree = "<group>"; };
 		222222222222222235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		222222222222222236 /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
+		222222222222222237 /* AreYouSleeping.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AreYouSleeping.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 				222222222222222222 /* AreYouSleepingApp.swift */,
 				222222222222222223 /* Store.swift */,
 				222222222222222235 /* Info.plist */,
+				222222222222222237 /* AreYouSleeping.entitlements */,
 				555555555555555504 /* Models */,
 				555555555555555505 /* Utils */,
 				555555555555555506 /* Services */,
@@ -84,6 +88,7 @@
 			isa = PBXGroup; children = (
 				222222222222222226 /* ApiClient.swift */,
 				222222222222222227 /* BedtimeReminder.swift */,
+				222222222222222236 /* ScreenTimeManager.swift */,
 			);
 			path = Services; sourceTree = "<group>";
 		};
@@ -156,6 +161,7 @@
 				111111111111111121 /* SettingsView.swift */,
 				111111111111111122 /* StyleSettingsView.swift */,
 				111111111111111123 /* FriendControlView.swift */,
+				111111111111111124 /* ScreenTimeManager.swift */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +173,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AreYouSleeping/AreYouSleeping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -185,6 +192,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AreYouSleeping/AreYouSleeping.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
