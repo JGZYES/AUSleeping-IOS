@@ -6,79 +6,80 @@ struct DashboardView: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
+        ScrollView {
+            VStack(spacing: 16) {
+                // 时钟 + 日期
+                VStack(spacing: 4) {
+                    Text(timeString)
+                        .font(.system(size: 56, weight: .thin, design: .rounded))
+                    Text(dateString)
+                        .font(.subheadline).foregroundColor(.secondary)
+                }
+                .padding(.top, 20)
 
-                    // 时钟 + 日期
-                    VStack(spacing: 4) {
-                        Text(timeString)
-                            .font(.system(size: 56, weight: .thin, design: .rounded))
-                        Text(dateString)
-                            .font(.subheadline).foregroundColor(.secondary)
-                    }
-                    .padding(.top, 20)
+                // 问候语
+                Text(greeting)
+                    .font(.title2)
 
-                    // 问候语
-                    Text(greeting)
-                        .font(.title2)
-
-                    // 倒计时
-                    VStack(spacing: 8) {
-                        Text(statusTitle)
-                            .font(.headline)
-                        Text(countdownText)
-                            .font(.system(size: 28, weight: .medium))
-                            .foregroundColor(.blue)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.regularMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                    // 睡眠状态卡片
-                    HStack(spacing: 16) {
-                        statusCard(title: "就寝时间", value: TimeUtil.fmt(store.bedtimeMinutes))
-                        statusCard(title: "起床时间", value: TimeUtil.fmt(store.waketimeMinutes))
-                    }
-
-                    // 监督状态
-                    HStack {
-                        Image(systemName: store.supervisionEnabled ? "shield.checkered" : "shield.slash")
-                            .foregroundColor(store.supervisionEnabled ? .green : .red)
-                        Text(store.supervisionEnabled ? "监督运行中" : "监督已关闭")
-                            .font(.subheadline)
-                    }
-                    .padding(.horizontal)
-
-                    // 入睡/起床按钮
-                    if store.isSleeping {
-                        Button {
-                            store.endSleep()
-                        } label: {
-                            Label("我起床了", systemImage: "sunrise.fill")
-                                .frame(maxWidth: .infinity)
-                        }
-                                .buttonStyle(.borderedProminent)
-                                .controlSize(.large)
-                                .tint(.orange)
-                    } else {
-                        Button {
-                            store.startSleep()
-                        } label: {
-                            Label("我要睡觉了", systemImage: "moon.zzz.fill")
-                                .frame(maxWidth: .infinity)
-                        }
-                                .buttonStyle(.borderedProminent)
-                                .controlSize(.large)
-                                .tint(.indigo)
-                    }
+                // 倒计时卡片
+                VStack(spacing: 8) {
+                    Text(statusTitle)
+                        .font(.headline)
+                    Text(countdownText)
+                        .font(.system(size: 28, weight: .medium))
+                        .foregroundColor(.blue)
                 }
                 .padding()
+                .frame(maxWidth: .infinity)
+                .glassCard()
+
+                // 就寝/起床时间卡片
+                HStack(spacing: 12) {
+                    infoCard(title: "就寝时间", value: TimeUtil.fmt(store.bedtimeMinutes), icon: "moon.fill")
+                    infoCard(title: "起床时间", value: TimeUtil.fmt(store.waketimeMinutes), icon: "sunrise.fill")
+                }
+
+                // 监督状态
+                HStack {
+                    Image(systemName: store.supervisionEnabled ? "shield.checkered" : "shield.slash")
+                        .foregroundColor(store.supervisionEnabled ? .green : .secondary)
+                    Text(store.supervisionEnabled ? "监督运行中" : "监督已关闭")
+                        .font(.subheadline)
+                }
+
+                // 入睡/起床按钮
+                if store.isSleeping {
+                    Button {
+                        store.endSleep()
+                    } label: {
+                        Label("我起床了", systemImage: "sunrise.fill")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .tint(.orange)
+                } else {
+                    Button {
+                        store.startSleep()
+                    } label: {
+                        Label("我要睡觉了", systemImage: "moon.zzz.fill")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .tint(.indigo)
+                }
             }
-            .navigationTitle("睡了吗")
-            .onReceive(timer) { t in now = t }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
         }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("睡了吗")
+                    .font(.headline)
+            }
+        }
+        .onReceive(timer) { t in now = t }
     }
 
     private var timeString: String {
@@ -121,14 +122,28 @@ struct DashboardView: View {
     }
 
     @ViewBuilder
-    private func statusCard(title: String, value: String) -> some View {
-        VStack(spacing: 4) {
-            Text(title).font(.caption).foregroundColor(.secondary)
+    private func infoCard(title: String, value: String, icon: String) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundColor(.blue)
             Text(value).font(.title3).bold()
+            Text(title).font(.caption).foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .glassCard()
+    }
+}
+
+// MARK: - 玻璃卡片 Modifier
+extension View {
+    func glassCard(radius: CGFloat = 16) -> some View {
+        self
+            .background(
+                RoundedRectangle(cornerRadius: radius)
+                    .fill(.thinMaterial)
+                    .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: 2)
+            )
     }
 }

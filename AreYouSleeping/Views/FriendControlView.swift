@@ -8,60 +8,95 @@ struct FriendControlView: View {
     @State private var errorMsg: String?
 
     var body: some View {
-        Form {
-            Section {
-                HStack {
-                    TextField("输入朋友的控制码", text: $friendCode)
-                        .disableAutocorrection(true)
-                        .textCase(.uppercase)
-                    Button("查询") { lookupFriend() }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.small)
-                        .disabled(friendCode.isEmpty || isLoading)
-                }
-            }
-
-            if let info = friendInfo {
-                Section("朋友信息") {
-                    Text(info).font(.headline)
-                }
-            }
-
-            if let error = errorMsg {
-                Section { Text(error).foregroundColor(.red) }
-            }
-
-            if friendInfo != nil {
-                Section("操作") {
-                    Button { triggerFriend("sleep") } label: {
-                        Label("催朋友睡觉", systemImage: "moon.zzz.fill")
+        ScrollView {
+            VStack(spacing: 16) {
+                // 查询卡片
+                VStack(spacing: 12) {
+                    HStack {
+                        TextField("输入朋友的控制码", text: $friendCode)
+                            .disableAutocorrection(true)
+                            .textCase(.uppercase)
+                        Button("查询") { lookupFriend() }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.small)
+                            .disabled(friendCode.isEmpty || isLoading)
                     }
-                    Button { triggerFriend("wake") } label: {
-                        Label("叫朋友起床", systemImage: "sunrise.fill")
+
+                    if isLoading {
+                        ProgressView()
+                    }
+
+                    if let info = friendInfo {
+                        Text(info)
+                            .font(.headline)
+                            .foregroundColor(.green)
+                    }
+
+                    if let error = errorMsg {
+                        Text(error)
+                            .font(.subheadline)
+                            .foregroundColor(.red)
                     }
                 }
+                .padding()
+                .glassCard()
+
+                // 远程控制卡片
+                if friendInfo != nil {
+                    VStack(spacing: 8) {
+                        Button {
+                            sendCommand("sleep")
+                        } label: {
+                            Label("提醒入睡", systemImage: "moon.zzz.fill")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.indigo)
+
+                        Button {
+                            sendCommand("wake")
+                        } label: {
+                            Label("提醒起床", systemImage: "sunrise.fill")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.orange)
+                    }
+                }
+            }
+            .padding(16)
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("控制朋友").font(.headline)
             }
         }
-        .navigationTitle("控制朋友")
-        .overlay { if isLoading { ProgressView() } }
     }
 
     private func lookupFriend() {
-        isLoading = true; errorMsg = nil; friendInfo = nil
+        isLoading = true
+        errorMsg = nil
+        friendInfo = nil
         Task {
-            if let res = await ApiClient.friendInfo(code: friendCode) {
-                friendInfo = (res["nickname"] as? String) ?? friendCode
-            } else {
-                errorMsg = "未找到该用户"
-            }
+            let result = await ApiClient.query(code: friendCode)
             isLoading = false
+            switch result {
+            case .success(let info):
+                friendInfo = info
+            case .failure(let e):
+                errorMsg = "查询失败：\(e.localizedDescription)"
+            }
         }
     }
 
-    private func triggerFriend(_ action: String) {
+    private func sendCommand(_ cmd: String) {
         Task {
-            let res = await ApiClient.friendTrigger(friendCode: friendCode, action: action)
-            if !res.ok { errorMsg = res.error ?? "操作失败" }
+            let result = await ApiClient.command(code: friendCode, cmd: cmd)
+            await MainActor.run {
+                if case .failure(let e) = result {
+                    errorMsg = "指令失败：\(e.localizedDescription)"
+                }
+            }
         }
     }
 }
