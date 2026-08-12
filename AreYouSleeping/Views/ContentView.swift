@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 struct ContentView: View {
     @EnvironmentObject var store: Store
@@ -30,10 +29,5 @@ struct ContentView: View {
                 .tag(2)
         }
         .tint(.blue)
-        .onAppear {
-            let appearance = UITabBarAppearance()
-            appearance.configureWithDefaultBackground()
-            UITabBar.appearance().scrollEdgeAppearance = appearance
-        }
     }
 }
