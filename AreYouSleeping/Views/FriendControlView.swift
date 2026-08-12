@@ -12,8 +12,8 @@ struct FriendControlView: View {
             Section {
                 HStack {
                     TextField("输入朋友的控制码", text: $friendCode)
-                        .autocapitalization(.allCharacters)
                         .disableAutocorrection(true)
+                        .textCase(.uppercase)
                     Button("查询") { lookupFriend() }
                         .buttonStyle(.borderedProminent)
                         .controlSize(.small)
