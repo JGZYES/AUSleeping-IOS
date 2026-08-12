@@ -3,6 +3,7 @@ import UserNotifications
 /// 睡前 30 分钟提醒调度器（iOS 使用 UNUserNotificationCenter）
 enum BedtimeReminder {
 
+    @MainActor
     static func schedule(store: Store) {
         guard store.agreed, store.bedtimeReminderEnabled else {
             cancel()
